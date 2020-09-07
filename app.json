@@ -1,0 +1,12 @@
+{
+  "name": "sonido",
+  "displayName": "sonido",
+  "expo": {
+    "name": "sonido",
+    "slug": "sonido",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
