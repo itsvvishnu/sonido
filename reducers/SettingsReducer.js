@@ -12,6 +12,7 @@ let nightModeStatus = async () => {
   }
 };
 nightModeStatus();
+
 console.log("store theme mode = " + status);
 
 const initialState = {

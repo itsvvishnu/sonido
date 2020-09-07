@@ -69,7 +69,7 @@ export const addToFavouritesThenSave = (item, curr) => {
       (station) => station["stationuuid"] === item["stationuuid"]
     );
     if (!find) {
-      console.log("in new item");
+      // console.log("in new item");
       dispatch(addToFavourites(item));
       let singleInsert = await ExecuteQuery(
         "INSERT INTO favourites (stationuuid, url_resolved, name , country , favicon ) VALUES ( ?, ?, ?, ?, ?)",
@@ -83,8 +83,8 @@ export const addToFavouritesThenSave = (item, curr) => {
       );
       console.log(singleInsert);
     } else {
-      console.log("exisiting item");
-      console.log(item);
+      // console.log("exisiting item");
+      // console.log(item);
       dispatch(removeFromFavourites(item, curr));
       await ExecuteQuery("DELETE FROM favourites WHERE stationuuid = ?", [
         item.stationuuid,

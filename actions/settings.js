@@ -6,8 +6,8 @@ export const useNightMode = () => ({
 });
 
 export const nightMode = (status) => {
-  console.log("status = ");
-  console.log(status);
+  // console.log("status = ");
+  // console.log(status);
   return async (dispatch) => {
     dispatch(useNightMode());
     try {

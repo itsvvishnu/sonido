@@ -23,7 +23,9 @@ class FavScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      iconColor:this.props.stationData.settings.nightMode? "#9696a2" : "#b8c0ce",
+      iconColor: this.props.stationData.settings.nightMode
+        ? "#9696a2"
+        : "#b8c0ce",
       query: "",
       favs: [],
     };
@@ -31,13 +33,15 @@ class FavScreen extends React.Component {
     this.submitQuery = this.submitQuery.bind(this);
     this.focused = this.focused.bind(this);
   }
-  playStationAndNavigate(item){
+  playStationAndNavigate(item) {
     this.props.play(item);
     this.props.navigation.navigate("Home");
   }
   focused = () => {
     this.setState({
-      iconColor:this.props.stationData.settings.nightMode ? '#eeeeee':'#454550'
+      iconColor: this.props.stationData.settings.nightMode
+        ? "#eeeeee"
+        : "#454550",
     });
   };
   changeQuery(val) {
@@ -52,19 +56,16 @@ class FavScreen extends React.Component {
   submitQuery() {
     this.setState({
       resultIsLoading: true,
-      iconColor: "#b8c0ce"
+      iconColor: "#b8c0ce",
     });
     let query = this.state.query;
     query = query.toLowerCase();
     if (query !== "") {
-      this.props.favourites(true,query);
+      this.props.favourites(true, query);
     }
   }
 
   render() {
-    console.log("stat from favs");
-    console.log(this.state.favs);
-    // console.log(this.props);
     let uicontent = (
       <FlatList
         extraData={this.state.favs}
@@ -73,7 +74,14 @@ class FavScreen extends React.Component {
         data={this.props.stationData.favData.favourites}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => this.playStationAndNavigate(item)}>
-            <View style={[styles.station,this.props.stationData.settings.nightMode ? {backgroundColor: "#3a3c53",borderColor: "transparent"} :{backgroundColor: "#fff",borderColor: "#b8c0ce44"}]}>
+            <View
+              style={[
+                styles.station,
+                this.props.stationData.settings.nightMode
+                  ? { backgroundColor: "#3a3c53", borderColor: "transparent" }
+                  : { backgroundColor: "#fff", borderColor: "#b8c0ce44" },
+              ]}
+            >
               <View style={styles.imgWrap}>
                 <ImageLoader
                   style={styles.imgLoader}
@@ -85,14 +93,23 @@ class FavScreen extends React.Component {
                 <Text
                   numberOfLines={1}
                   style={
-                    ({ width: 100 }, { fontSize: 16 }, this.props.stationData.settings.nightMode ? {color: "#eeeeee"} :{color: "#323742"})
+                    ({ width: 100 },
+                    { fontSize: 16 },
+                    this.props.stationData.settings.nightMode
+                      ? { color: "#eeeeee" }
+                      : { color: "#323742" })
                   }
                 >
                   {item.name}
                 </Text>
                 <Text
                   numberOfLines={1}
-                  style={({ width: 100 }, this.props.stationData.settings.nightMode ? {color:"#9696a2"}:{ color: "#b8c0ce" })}
+                  style={
+                    ({ width: 100 },
+                    this.props.stationData.settings.nightMode
+                      ? { color: "#9696a2" }
+                      : { color: "#b8c0ce" })
+                  }
                 >
                   {item.country}
                 </Text>
@@ -128,7 +145,14 @@ class FavScreen extends React.Component {
       );
     }
     return (
-      <View style={[styles.container,this.props.stationData.settings.nightMode ? {backgroundColor:"#2c2c44"}:{backgroundColor:"#fff"}]}>
+      <View
+        style={[
+          styles.container,
+          this.props.stationData.settings.nightMode
+            ? { backgroundColor: "#2c2c44" }
+            : { backgroundColor: "#fff" },
+        ]}
+      >
         <SafeAreaView style={{ width: "100%" }}>
           <View style={styles.stationTitleWrap}>
             <View style={styles.favSeachContainer}>
@@ -136,8 +160,17 @@ class FavScreen extends React.Component {
                 round="true"
                 inputStyle={{ fontSize: 14, color: this.state.iconColor }}
                 iconColor={this.state.iconColor}
-                style={[{borderRadius:200,height:40},this.props.stationData.settings.nightMode ? {backgroundColor:"#3a3c53"}:{backgroundColor:"#fff"}]}
-                placeholderTextColor={this.props.stationData.settings.nightMode ? '#9696a2':'#b8c0ce'}
+                style={[
+                  { borderRadius: 200, height: 40 },
+                  this.props.stationData.settings.nightMode
+                    ? { backgroundColor: "#3a3c53" }
+                    : { backgroundColor: "#fff" },
+                ]}
+                placeholderTextColor={
+                  this.props.stationData.settings.nightMode
+                    ? "#9696a2"
+                    : "#b8c0ce"
+                }
                 placeholder="Search favourites"
                 onChangeText={(val) => this.changeQuery(val)}
                 value={this.state.query}
@@ -167,9 +200,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToprops = (dispatch) => {
   return {
-    favourites: (isActive,query) => dispatch(fetchFavourites(isActive,query)),
+    favourites: (isActive, query) => dispatch(fetchFavourites(isActive, query)),
     removeFav: (item, curr) => dispatch(addToFavouritesThenSave(item, curr)),
-    play:(station) => dispatch(playStation(station))
+    play: (station) => dispatch(playStation(station)),
   };
 };
 

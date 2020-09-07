@@ -5,7 +5,7 @@ import {
   View,
   SafeAreaView,
   FlatList,
-  TouchableOpacity,
+  TouchableNativeFeedback,
   ScrollView,
   StatusBar,
 } from "react-native";
@@ -69,14 +69,14 @@ class HomeScreen extends React.Component {
   componentDidUpdate() {
     try {
       if (Platform.OS == "android") {
-        console.log("received prop = ? ");
-        console.log(this.props.stationData.settings.nightMode);
+        // console.log("received prop = ? ");
+        // console.log(this.props.stationData.settings.nightMode);
         if (this.props.stationData.settings.nightMode === true) {
-          console.log("nightMode");
+          // console.log("nightMode");
           NavigationBar.setColor("#2c2c44");
         } else {
-          console.log("white mode");
-          NavigationBar.setColor("#ffffff");
+          // console.log("white mode");
+          NavigationBar.setColor("#ffffff", false);
         }
         // console.log(response)// {success: true}
       }
@@ -89,12 +89,12 @@ class HomeScreen extends React.Component {
     this.props.fetchFavs(false, "");
     try {
       if (Platform.OS == "android") {
-        console.log("android");
+        // console.log("android");
         if (this.props.stationData.settings.nightMode === true) {
-          console.log("nightMode");
+          // console.log("nightMode");
           NavigationBar.setColor("#2c2c44");
         } else {
-          console.log("white mode");
+          // console.log("white mode");
           NavigationBar.setColor("#ffffff");
         }
         // console.log(response)// {success: true}
@@ -144,8 +144,8 @@ class HomeScreen extends React.Component {
   };
   render() {
     // console.log(this.state.selectedFavItems);
-    console.log("state from render homepage");
-    console.log(this.props.stationData.favData.favourites);
+    // console.log("state from render homepage");
+    // console.log(this.props.stationData.favData.favourites);
     let selbar = null;
     if (this.props.stationData.stationData.showSelBar) {
       selbar = (
@@ -156,7 +156,9 @@ class HomeScreen extends React.Component {
           style={styles.featFlatlist}
           data={this.state.featureSelections}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => this.fetchByFeature(item.key)}>
+            <TouchableNativeFeedback
+              onPress={() => this.fetchByFeature(item.key)}
+            >
               <View
                 style={[
                   styles.featItem,
@@ -191,7 +193,7 @@ class HomeScreen extends React.Component {
                   {item.text}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
           )}
         />
       );
@@ -202,7 +204,7 @@ class HomeScreen extends React.Component {
         keyExtractor={(item) => item.stationuuid}
         data={this.props.stationData.stationData.stations}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => this.props.play(item)}>
+          <TouchableNativeFeedback onPress={() => this.props.play(item)}>
             <View
               style={[
                 styles.station,
@@ -244,7 +246,7 @@ class HomeScreen extends React.Component {
                 </Text>
               </View>
               <View style={styles.stationControlsWrap}>
-                <TouchableOpacity
+                <TouchableNativeFeedback
                   style={styles.stationControlsWrap}
                   onPress={() =>
                     this.props.addFavourites(
@@ -267,10 +269,10 @@ class HomeScreen extends React.Component {
                     }
                     size={22}
                   />
-                </TouchableOpacity>
+                </TouchableNativeFeedback>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableNativeFeedback>
         )}
       />
     );

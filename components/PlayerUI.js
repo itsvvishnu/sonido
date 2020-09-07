@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-// import { Audio } from "expo-av";
+import { Audio } from "expo-av";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ImageLoader } from "react-native-image-fallback";
 import fallbackImage from "../assets/fallback.png";
@@ -16,91 +16,57 @@ import { connect } from "react-redux";
 import { backToHome } from "../actions/player";
 import { addToFavouritesThenSave } from "../actions/favourites";
 import TrackPlayer from "react-native-track-player";
+import { TrackPlayerEvents } from "react-native-track-player";
+
+var isBuffering = true;
 
 class PlayerUI extends Component {
   constructor(props) {
     super(props);
+    this.togglePlayPause = this.togglePlayPause.bind(this);
     this.state = {
       play: true,
-      playing: false,
-      disable: true,
-      connection: true,
-      pause: false,
+      isBuffering: false,
     };
-    this.togglePlayPause = this.togglePlayPause.bind(this);
   }
+
   componentDidUpdate() {
-    console.log("update...");
+    TrackPlayer.setupPlayer().then(() => {});
+    TrackPlayer.add([
+      this.props.stationData.playerData.stream,
+    ]).then(function () {});
+    if (this.state.play) {
+      TrackPlayer.play();
+    } else {
+      TrackPlayer.pause();
+    }
   }
   componentDidMount() {
-    console.log(this.props.stationData.playerData.stream);
-    TrackPlayer.setupPlayer().then(() => {
-      // The player is ready to be used
-    });
-    var track = {
-      id: this.props.stationData.playerData.stream.stationuuid,
-      url: this.props.stationData.playerData.stream.url_resolved,
-    };
-    TrackPlayer.add([track]);
-    TrackPlayer.play();
-
-    //   TrackPlayer.setupPlayer().then(() => {
-    //     // The player is ready to be used
-
-    // });
-    // this.sound = new Audio.Sound();
-    // this.sound.staysActiveInBackground = true;
-    // try {
-    //   await this.sound.loadAsync({
-    //     uri: this.props.stationData.playerData.stream.url_resolved,
-    //   });
-    //   await this.sound.playAsync();
-    // } catch (error) {
-    //   this.setState({
-    //     disable: false,
-    //     connection: false,
-    // });
-    // }
-    // this.sound.setStatusAsync({ progressUpdateIntervalMillis: 2000 });
-    // this.sound._onPlaybackStatusUpdate = (playbackStatus) => {
-    //   if (playbackStatus.isPlaying && playbackStatus.isLoaded) {
-    //     this.setState({
-    //       playing: true,
-    //       disable: false,
-    //     });
-    //   }
-    //   if(!playbackStatus.isPlaying){
-    //     this.setState({
-    //       playing:false
-    //     })
-    //   }
-    // };
+    TrackPlayer.add([
+      this.props.stationData.playerData.stream,
+    ]).then(function () {});
+    if (this.state.play) {
+      TrackPlayer.play();
+    } else {
+      TrackPlayer.pause();
+    }
   }
-  async togglePlayPause() {
+
+  togglePlayPause() {
     this.setState({
       play: !this.state.play,
     });
-    if (this.state.play) {
-      await this.sound.pauseAsync();
-      this.setState({
-        pause: true,
-      });
-    } else {
-      await this.sound.playAsync();
-      this.setState({
-        pause: false,
-      });
-    }
   }
-  async componentWillUnmount() {
-    await this.sound.unloadAsync();
+  componentWillUnmount() {
+    TrackPlayer.destroy();
   }
   render() {
     let errorMessage = null;
-    if (this.state.connection === false) {
+    if (TrackPlayerEvents.STATE_STOPPED) {
       errorMessage = <Text style={styles.msg}>Can't connect!</Text>;
-    } else if (this.state.playing === false && !this.state.pause) {
-      errorMessage = <Text style={styles.msg}>Please wait...</Text>;
+    }
+    if (this.state.isBuffering) {
+      errorMessage = <Text style={styles.msg}>Buffering...</Text>;
     }
 
     return (
@@ -126,13 +92,14 @@ class PlayerUI extends Component {
           <View style={styles.topSection}>
             <View style={styles.backToHomeButton}>
               <TouchableOpacity
-                disabled={this.state.disable}
+                // disabled={this.state.disable}
                 onPress={() => this.props.back()}
                 style={styles.backToHomeButton}
               >
                 <Icon
                   name="ios-arrow-back"
-                  color={this.state.disable ? "#b8c0ce" : "#507dc5"}
+                  // color={this.state.disable ? "#b8c0ce" : "#507dc5"}
+                  color="#507dc5"
                   size={30}
                 />
               </TouchableOpacity>
@@ -179,7 +146,7 @@ class PlayerUI extends Component {
               style={styles.stationAlbum}
               source={this.props.stationData.playerData.stream.favicon}
               fallback={fallbackImage}
-              key={this.props.stationData.playerData.stream.url}
+              key={this.props.stationData.playerData.stream.favicon}
             />
           </View>
           <View style={styles.stationDet}>
