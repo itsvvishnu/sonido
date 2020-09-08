@@ -72,14 +72,8 @@ export const addToFavouritesThenSave = (item, curr) => {
       // console.log("in new item");
       dispatch(addToFavourites(item));
       let singleInsert = await ExecuteQuery(
-        "INSERT INTO favourites (stationuuid, url_resolved, name , country , favicon ) VALUES ( ?, ?, ?, ?, ?)",
-        [
-          item.stationuuid,
-          item.url_resolved,
-          item.name,
-          item.country,
-          item.favicon,
-        ]
+        "INSERT INTO favourites (stationuuid, url, name , country , favicon ) VALUES ( ?, ?, ?, ?, ?)",
+        [item.stationuuid, item.url, item.name, item.country, item.favicon]
       );
       console.log(singleInsert);
     } else {

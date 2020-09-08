@@ -103,7 +103,7 @@ class HomeScreen extends React.Component {
       // console.log(e)// {success: false}
     }
     await this.ExecuteQuery(
-      "CREATE TABLE IF NOT EXISTS favourites (stationuuid VARCHAR(36) PRIMARY KEY NOT NULL, url_resolved VARCHAR(100),name VARCHAR(30),country VARCHAR(30) , favicon VARCHAR(30) )",
+      "CREATE TABLE IF NOT EXISTS favourites (stationuuid VARCHAR(36) PRIMARY KEY NOT NULL, url VARCHAR(200),name VARCHAR(30),country VARCHAR(30) , favicon VARCHAR(30) )",
       []
     );
   }

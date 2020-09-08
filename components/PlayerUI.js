@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,17 +8,16 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-import { Audio } from "expo-av";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ImageLoader } from "react-native-image-fallback";
 import fallbackImage from "../assets/fallback.png";
 import { connect } from "react-redux";
 import { backToHome } from "../actions/player";
 import { addToFavouritesThenSave } from "../actions/favourites";
-import TrackPlayer from "react-native-track-player";
-import { TrackPlayerEvents } from "react-native-track-player";
-
-var isBuffering = true;
+import TrackPlayer, {
+  useTrackPlayerProgress,
+  TrackPlayerEvents,
+} from "react-native-track-player";
 
 class PlayerUI extends Component {
   constructor(props) {
@@ -62,9 +61,9 @@ class PlayerUI extends Component {
   }
   render() {
     let errorMessage = null;
-    if (TrackPlayerEvents.STATE_STOPPED) {
-      errorMessage = <Text style={styles.msg}>Can't connect!</Text>;
-    }
+    // if () {
+    //   errorMessage = <Text style={styles.msg}>Can't connect!</Text>;
+    // }
     if (this.state.isBuffering) {
       errorMessage = <Text style={styles.msg}>Buffering...</Text>;
     }
@@ -180,12 +179,28 @@ class PlayerUI extends Component {
               />
             </TouchableOpacity>
           </View>
-          <View styles={styles.errorMsg}>{errorMessage}</View>
+          {/* <View styles={styles.errorMsg}>{errorMessage}</View> */}
+          <MyComponent />
         </View>
       </SafeAreaView>
     );
   }
 }
+const events = [
+  TrackPlayerEvents.PLAYBACK_STATE,
+  TrackPlayerEvents.PLAYBACK_ERROR,
+];
+
+const MyComponent = () => {
+  const { bufferedPosition } = useTrackPlayerProgress();
+  return (
+    <View style={styles.errorMsg}>
+      <Text style={styles.msg}>
+        {bufferedPosition > 10 ? "" : "Buffering..."}
+      </Text>
+    </View>
+  );
+};
 
 const mapStateToProps = (state) => {
   return { stationData: state };

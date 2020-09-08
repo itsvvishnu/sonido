@@ -5,7 +5,7 @@ export const playStation = (station) => {
     refStation = {
       id: station.stationuuid,
       stationuuid: station.stationuuid,
-      url: station.url_resolved,
+      url: station.url,
       favicon: station.favicon,
       artwork: station.favicon,
       country: station.country,
