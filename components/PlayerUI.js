@@ -60,14 +60,6 @@ class PlayerUI extends Component {
     TrackPlayer.destroy();
   }
   render() {
-    let errorMessage = null;
-    // if () {
-    //   errorMessage = <Text style={styles.msg}>Can't connect!</Text>;
-    // }
-    if (this.state.isBuffering) {
-      errorMessage = <Text style={styles.msg}>Buffering...</Text>;
-    }
-
     return (
       <SafeAreaView style={{ width: "100%" }}>
         <StatusBar
@@ -77,14 +69,14 @@ class PlayerUI extends Component {
               : "dark-content"
           }
           backgroundColor={
-            this.props.stationData.settings.nightMode ? "#282d43" : "#fff"
+            this.props.stationData.settings.nightMode ? "#2c2c44" : "#fff"
           }
         />
         <View
           style={[
             styles.container,
             this.props.stationData.settings.nightMode
-              ? { backgroundColor: "#282d43" }
+              ? { backgroundColor: "#2c2c44" }
               : { backgroundColor: "#fff" },
           ]}
         >

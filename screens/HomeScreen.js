@@ -24,6 +24,7 @@ import {
 } from "../actions/favourites";
 import * as SQLite from "expo-sqlite";
 import NavigationBar from "react-native-navbar-color";
+import { fetchSettings } from "../actions/settings";
 
 const db = SQLite.openDatabase("radiodb");
 
@@ -85,6 +86,7 @@ class HomeScreen extends React.Component {
     }
   }
   async componentDidMount() {
+    this.props.settings();
     this.props.loadStations("topclick");
     this.props.fetchFavs(false, "");
     try {
@@ -145,7 +147,7 @@ class HomeScreen extends React.Component {
   render() {
     // console.log(this.state.selectedFavItems);
     // console.log("state from render homepage");
-    // console.log(this.props.stationData.favData.favourites);
+    console.log(this.props.stationData.settings);
     let selbar = null;
     if (this.props.stationData.stationData.showSelBar) {
       selbar = (
@@ -330,6 +332,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToprops = (dispatch) => {
   return {
     play: (station) => dispatch(playStation(station)),
+    settings: () => dispatch(fetchSettings()),
     loadStations: (cat) => dispatch(fetchStations(cat)),
     addFavourites: (item, curr) =>
       dispatch(addToFavouritesThenSave(item, curr)),

@@ -7,8 +7,9 @@ import {
   SEARCH_STATION_REQUEST,
   SEARCH_STATION_SUCCESS,
   SEARCH_STATION_FAIL,
-  TOGGLE_SELECTION_BAR
+  TOGGLE_SELECTION_BAR,
 } from "./types";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const fetchStationRequest = () => ({ type: FETCH_STATIONS_REQUEST });
 
@@ -22,12 +23,20 @@ export const fetchStationSuccess = (json) => ({
   payload: json,
 });
 
-export const fetchStations = (cat="topclick") => {
+export const fetchStations = (cat = "topclick") => {
   return async (dispatch) => {
     dispatch(fetchStationRequest());
+    let count;
+    try {
+      count = await AsyncStorage.getItem("fetchcount");
+      if (count == null) {
+        count = "10";
+      }
+      console.log(count);
+    } catch (err) {}
     try {
       let response = await fetch(
-        `https://fr1.api.radio-browser.info/json/stations/${cat}/20`
+        `https://fr1.api.radio-browser.info/json/stations/${cat}/${count}`
       );
       let json = await response.json();
       dispatch(fetchStationSuccess(json));
@@ -37,24 +46,25 @@ export const fetchStations = (cat="topclick") => {
   };
 };
 
-export const searchStationRequest = () => ({type:SEARCH_STATION_REQUEST});
+export const searchStationRequest = () => ({ type: SEARCH_STATION_REQUEST });
 
 export const searchStationFail = (err) => ({
-  type:SEARCH_STATION_FAIL,
-  payload:err
-})
-
+  type: SEARCH_STATION_FAIL,
+  payload: err,
+});
 
 export const searchStationSuccess = (json) => ({
-  type:SEARCH_STATION_SUCCESS,
-  payload:json
-})
+  type: SEARCH_STATION_SUCCESS,
+  payload: json,
+});
 
 export const searchStation = (query) => {
   return async (dispatch) => {
     dispatch(searchStationRequest());
     try {
-      let response = await fetch(`https://fr1.api.radio-browser.info/json/stations/search?name=${query}`);
+      let response = await fetch(
+        `https://fr1.api.radio-browser.info/json/stations/search?name=${query}`
+      );
       let json = await response.json();
       dispatch(searchStationSuccess(json));
     } catch (err) {
@@ -63,10 +73,10 @@ export const searchStation = (query) => {
   };
 };
 
-export const toggleSelectionBar = () =>{
-  return async (dispatch) =>{
+export const toggleSelectionBar = () => {
+  return async (dispatch) => {
     dispatch({
-      type:TOGGLE_SELECTION_BAR,
-    })
-  }
-}
+      type: TOGGLE_SELECTION_BAR,
+    });
+  };
+};

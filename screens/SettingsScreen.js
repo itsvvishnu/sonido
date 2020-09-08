@@ -10,7 +10,7 @@ import {
 import ToggleSwitch from "toggle-switch-react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import NumericInput from "react-native-numeric-input";
-import { nightMode } from "../actions/settings";
+import { nightMode, fetchCountChange } from "../actions/settings";
 import { connect } from "react-redux";
 
 class SettingsScreen extends React.Component {
@@ -19,6 +19,7 @@ class SettingsScreen extends React.Component {
     this.state = {};
   }
   render() {
+    console.log(this.props.settings.settings);
     return (
       <SafeAreaView
         style={[
@@ -109,9 +110,9 @@ class SettingsScreen extends React.Component {
                 No. of stations
               </Text>
               <NumericInput
-                initValue={10}
-                value={this.state.v6}
-                onChange={(v6) => this.setState({ v6 })}
+                initValue={this.props.settings.settings.count}
+                value={this.props.settings.settings.count}
+                onChange={(value) => this.props.counter(value.toString())}
                 rounded
                 step={5}
                 minValue={5}
@@ -200,6 +201,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToprops = (dispatch) => {
   return {
     nightMode: (status) => dispatch(nightMode(status)),
+    counter: (count) => dispatch(fetchCountChange(count)),
   };
 };
 
