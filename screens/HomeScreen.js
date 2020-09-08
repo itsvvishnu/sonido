@@ -70,20 +70,13 @@ class HomeScreen extends React.Component {
   componentDidUpdate() {
     try {
       if (Platform.OS == "android") {
-        // console.log("received prop = ? ");
-        // console.log(this.props.stationData.settings.nightMode);
         if (this.props.stationData.settings.nightMode === true) {
-          // console.log("nightMode");
           NavigationBar.setColor("#2c2c44");
         } else {
-          // console.log("white mode");
           NavigationBar.setColor("#ffffff", false);
         }
-        // console.log(response)// {success: true}
       }
-    } catch (e) {
-      // console.log(e)// {success: false}
-    }
+    } catch (e) {}
   }
   async componentDidMount() {
     this.props.settings();
@@ -93,27 +86,20 @@ class HomeScreen extends React.Component {
     this.props.fetchFavs(false, "");
     try {
       if (Platform.OS == "android") {
-        // console.log("android");
         if (this.props.stationData.settings.nightMode === true) {
-          // console.log("nightMode");
           NavigationBar.setColor("#2c2c44");
         } else {
-          // console.log("white mode");
           NavigationBar.setColor("#ffffff");
         }
-        // console.log(response)// {success: true}
       }
-    } catch (e) {
-      // console.log(e)// {success: false}
-    }
+    } catch (e) {}
     await this.ExecuteQuery(
-      "CREATE TABLE IF NOT EXISTS favourites (stationuuid VARCHAR(36) PRIMARY KEY NOT NULL, url VARCHAR(200),name VARCHAR(30),country VARCHAR(30) , favicon VARCHAR(30) )",
+      "CREATE TABLE IF NOT EXISTS favourites (stationuuid VARCHAR(36) PRIMARY KEY NOT NULL, url_resolved VARCHAR(200) , url VARCHAR(200),name VARCHAR(30),country VARCHAR(30) , favicon VARCHAR(30) )",
       []
     );
   }
   startPlayback = (item) => {
     this.props.play(item);
-    // console.log(item);
   };
   playerHandler = () => {
     this.setState({
@@ -121,10 +107,7 @@ class HomeScreen extends React.Component {
     });
   };
   addToFav = (item) => {
-    // console.log("press");
-    // console.log(item);
     var selectedFavItems = [...this.state.selectedFavItems]; // clone state
-
     if (selectedFavItems.includes(item))
       selectedFavItems = selectedFavItems.filter((_id) => _id !== item);
     else selectedFavItems.push(item);
@@ -280,7 +263,10 @@ class HomeScreen extends React.Component {
         )}
       />
     );
-    if (this.props.stationData.stationData.isLoading) {
+    if (
+      this.props.stationData.stationData.isLoading ||
+      this.props.stationData.stationData.searchIsLoading
+    ) {
       content = (
         <View style={styles.containerCenter}>
           <Loader />
@@ -295,7 +281,7 @@ class HomeScreen extends React.Component {
         style={[
           styles.container,
           this.props.stationData.settings.nightMode
-            ? { backgroundColor: "#282d43" }
+            ? { backgroundColor: "#2a2c45" }
             : { backgroundColor: "#fff" },
         ]}
       >
@@ -415,11 +401,14 @@ const styles = StyleSheet.create({
   featOuter: {
     flexDirection: "row",
     paddingVertical: 4,
+    marginLeft: 10,
+    marginRight: 10,
+    flexWrap: "wrap",
+    overflow: "hidden",
   },
   featFlatlist: {
-    // paddingHorizontal:10,
-    // marginHorizontal:-10,
     width: "100%",
+    marginLeft: -10,
     marginBottom: 8,
   },
   featItem: {

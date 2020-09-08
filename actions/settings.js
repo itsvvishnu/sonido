@@ -47,10 +47,11 @@ export const fetchSettings = () => {
     try {
       let temp = await AsyncStorage.getItem("darkmode");
       temp = JSON.parse(temp);
-      console.log("temp value = " + temp);
       let tempCount = await AsyncStorage.getItem("fetchcount");
       if (tempCount != null) {
         count = parseInt(tempCount);
+      } else {
+        count = 10;
       }
       mode = temp;
     } catch (err) {

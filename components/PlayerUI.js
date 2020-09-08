@@ -30,6 +30,7 @@ class PlayerUI extends Component {
   }
 
   componentDidUpdate() {
+    console.log(this.props.stationData.playerData.stream.url);
     TrackPlayer.setupPlayer().then(() => {});
     TrackPlayer.add([
       this.props.stationData.playerData.stream,
@@ -41,6 +42,20 @@ class PlayerUI extends Component {
     }
   }
   componentDidMount() {
+    TrackPlayer.updateOptions({
+      // An array of capabilities that will show up when the notification is in the compact form on Android
+      compactCapabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+      ],
+      // Icons for the notification on Android (if you don't like the default ones)
+      // playIcon: require("./play-icon.png"),
+      // pauseIcon: require("./pause-icon.png"),
+      // stopIcon: require("./stop-icon.png"),
+      // previousIcon: require("./previous-icon.png"),
+      // nextIcon: require("./next-icon.png"),
+      icon: require("../assets/notification.png"), // The notification icon
+    });
     TrackPlayer.add([
       this.props.stationData.playerData.stream,
     ]).then(function () {});
@@ -90,7 +105,11 @@ class PlayerUI extends Component {
                 <Icon
                   name="ios-arrow-back"
                   // color={this.state.disable ? "#b8c0ce" : "#507dc5"}
-                  color="#507dc5"
+                  color={
+                    this.props.stationData.settings.nightMode
+                      ? "#eeeeee"
+                      : "#507dc5"
+                  }
                   size={30}
                 />
               </TouchableOpacity>
@@ -172,7 +191,7 @@ class PlayerUI extends Component {
             </TouchableOpacity>
           </View>
           {/* <View styles={styles.errorMsg}>{errorMessage}</View> */}
-          <MyComponent />
+          {this.state.play ? <MyComponent /> : null}
         </View>
       </SafeAreaView>
     );

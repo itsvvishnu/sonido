@@ -34,6 +34,7 @@ class FavScreen extends React.Component {
     this.focused = this.focused.bind(this);
   }
   playStationAndNavigate(item) {
+    console.log(item);
     this.props.play(item);
     this.props.navigation.navigate("Home");
   }
@@ -149,7 +150,7 @@ class FavScreen extends React.Component {
         style={[
           styles.container,
           this.props.stationData.settings.nightMode
-            ? { backgroundColor: "#2c2c44" }
+            ? { backgroundColor: "#2a2c45" }
             : { backgroundColor: "#fff" },
         ]}
       >
