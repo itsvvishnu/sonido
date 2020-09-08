@@ -5,7 +5,6 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  nightMode: false,
   count: 10,
 };
 
@@ -16,7 +15,11 @@ export const settingsReducer = (state = initialState, action) => {
     case FETCH_COUNT_CHANGE:
       return { ...state, count: action.payload };
     case FETCH_SETTINGS:
-      return { ...state, count: action.count, nightMode: action.mode };
+      return {
+        ...state,
+        count: action.payload.count,
+        nightMode: action.payload.mode,
+      };
     default:
       return { ...state };
   }

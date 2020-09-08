@@ -8,6 +8,8 @@ export const useNightMode = () => ({
 export const nightMode = (status) => {
   return async (dispatch) => {
     dispatch(useNightMode());
+    // console.log(" from night mode toggler");
+    // console.log(JSON.stringify(status));
     try {
       await AsyncStorage.setItem("darkmode", JSON.stringify(status));
     } catch (err) {
@@ -32,8 +34,10 @@ export const fetchCountChange = (count) => {
 
 export const fetchSettingsInit = (count, mode) => ({
   type: FETCH_SETTINGS,
-  count,
-  mode,
+  payload: {
+    count,
+    mode,
+  },
 });
 
 export const fetchSettings = () => {
@@ -42,19 +46,16 @@ export const fetchSettings = () => {
     let count;
     try {
       let temp = await AsyncStorage.getItem("darkmode");
-      console.log(temp);
       temp = JSON.parse(temp);
-      console.log(temp);
+      console.log("temp value = " + temp);
       let tempCount = await AsyncStorage.getItem("fetchcount");
       if (tempCount != null) {
         count = parseInt(tempCount);
       }
       mode = temp;
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
-    console.log(mode);
-    console.log(count);
-    dispatch(fetchCountChangeInit(count, mode));
+    dispatch(fetchSettingsInit(count, mode));
   };
 };

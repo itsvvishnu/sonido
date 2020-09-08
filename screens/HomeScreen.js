@@ -87,6 +87,8 @@ class HomeScreen extends React.Component {
   }
   async componentDidMount() {
     this.props.settings();
+    console.log("after fetch settings...");
+    console.log(this.props.stationData.settings);
     this.props.loadStations("topclick");
     this.props.fetchFavs(false, "");
     try {

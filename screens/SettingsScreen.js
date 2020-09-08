@@ -19,6 +19,7 @@ class SettingsScreen extends React.Component {
     this.state = {};
   }
   render() {
+    console.log("from settings...");
     console.log(this.props.settings.settings);
     return (
       <SafeAreaView

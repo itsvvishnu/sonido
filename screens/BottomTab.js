@@ -1,4 +1,4 @@
-import { nightMode } from "../actions/settings";
+// import { nightMode } from "../actions/settings";
 import { connect } from "react-redux";
 import HomeScreen from "./HomeScreen";
 import SettingsScreen from "./SettingsScreen";
@@ -78,9 +78,9 @@ class BottomTab extends React.Component {
 const mapStateToProps = (state) => {
   return { settings: state };
 };
-const mapDispatchToprops = (dispatch) => {
-  return {
-    nightMode: () => dispatch(nightMode()),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToprops)(BottomTab);
+// const mapDispatchToprops = (dispatch) => {
+//   return {
+//     nightMode: () => dispatch(nightMode()),
+//   };
+// };
+export default connect(mapStateToProps)(BottomTab);
