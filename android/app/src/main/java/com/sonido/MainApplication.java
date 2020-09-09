@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import com.thebylito.navigationbarcolor.NavigationBarColorPackage;
+import com.guichaguri.trackplayer.TrackPlayer;
+
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -43,6 +45,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       new NavigationBarColorPackage();
+      new TrackPlayer();
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       return packages;

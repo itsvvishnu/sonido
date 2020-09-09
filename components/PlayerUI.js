@@ -54,7 +54,8 @@ class PlayerUI extends Component {
       // stopIcon: require("./stop-icon.png"),
       // previousIcon: require("./previous-icon.png"),
       // nextIcon: require("./next-icon.png"),
-      icon: require("../assets/notification.png"), // The notification icon
+      icon: require("../assets/notification.png"),
+      // The notification icon
     });
     TrackPlayer.add([
       this.props.stationData.playerData.stream,
