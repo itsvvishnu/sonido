@@ -4,8 +4,6 @@
 
 `Sonido` is a simple radio streaming app built in [React Native](https://reactnative.dev/).
 
-[![Build Status](https://travis-ci.com/piemonte/Player.svg?branch=master)](https://travis-ci.com/piemonte/Player)
-
 ## Screenshots
 
 <div style="display:flex;justify-content:flex-start;flex-wrap:wrap">
