@@ -9,8 +9,8 @@
 ## Screenshots
 
 <p float="left">
-<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/1.jpg" width=200 />
-<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/2.jpg" width=200 />
-<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/3.jpg" width=200 />
-<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/4.jpg" width=200 />
+<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/1.jpg" width=250 hspace="20" />
+<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/2.jpg" width=250 hspace="20" />
+<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/3.jpg" width=250 hspace="20" />
+<img src="https://github.com/itsvvishnu/sonido/raw/master/screenshots/4.jpg" width=250 hspace="20" />
 </p>
